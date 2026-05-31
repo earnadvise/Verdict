@@ -285,3 +285,10 @@ curl https://mainnet.base.org \\
 
 // Expose to window
 window.ApiSandbox = ApiSandbox;
+
+// Auto-initialize when loaded
+document.addEventListener('DOMContentLoaded', () => {
+  if (document.getElementById('sandbox-builder-code')) {
+    ApiSandbox.init();
+  }
+});

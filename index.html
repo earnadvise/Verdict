@@ -29,6 +29,7 @@
       <a class="nav-item active" data-view="dashboard">Markets</a>
       <a class="nav-item" data-view="portfolio">Portfolio</a>
       <a class="nav-item" data-view="ai-creator">Create</a>
+      <a class="nav-item" data-view="sandbox">Sandbox</a>
     </nav>
 
     <div class="header-actions">
@@ -130,8 +131,77 @@
           </div>
         </div>
       </div>
+
+      <!-- Dev Sandbox View -->
+      <div id="view-sandbox" class="view-panel">
+        <h1 class="section-title">Developer Portal & Sandbox</h1>
+        <p style="color: var(--text-muted); margin-bottom: 2rem; max-width: 800px; line-height: 1.6;">
+          Verdict integrates ERC-8021 Transaction Attribution on Base. Developers and builders receive revenue share rewards automatically by appending their custom attribution suffix code to transactions. Use the sandbox below to compile, visualize, and simulate transactions.
+        </p>
+
+        <div class="sandbox-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 2rem; align-items: start; margin-top: 1rem;">
+          <!-- Compiler Config Panel -->
+          <div class="glass-panel" style="min-height: 480px; display: flex; flex-direction: column; justify-content: space-between;">
+            <div>
+              <h3 style="margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.5rem; font-family: var(--font-display); font-size: 1.3rem;">
+                <span>🛠️</span> Suffix Compiler
+              </h3>
+              
+              <div class="config-group">
+                <label>Builder Suffix Code</label>
+                <input type="text" id="sandbox-builder-code" value="verdict_market" placeholder="Enter custom builder code (alphanumeric and _)">
+                <small style="color: var(--text-muted); font-size: 0.8rem; margin-top: 0.4rem; display: block; line-height: 1.4;">Sanitized on-the-fly (max 32 characters, lowercase letters, digits, and underscores).</small>
+              </div>
+
+              <div style="margin-top: 2rem;">
+                <label style="font-size: 0.85rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; display: block; margin-bottom: 0.75rem;">Compiled Byte Suffix</label>
+                <div id="byte-visualizer-container" class="byte-container">
+                  <!-- Bytes rendered via api-sandbox.js -->
+                </div>
+              </div>
+            </div>
+            
+            <!-- Color legend for bytes -->
+            <div class="legend-container" style="display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 1.5rem; padding-top: 1.25rem; border-top: 1px solid var(--border-color); font-size: 0.75rem; color: var(--text-muted);">
+              <div style="display: flex; align-items: center; gap: 0.35rem;"><span style="display: inline-block; width: 10px; height: 10px; border-radius: 2px; background: rgba(99, 102, 241, 0.2); border: 1px solid rgba(99, 102, 241, 0.4);"></span> Letters Bytes (ASCII)</div>
+              <div style="display: flex; align-items: center; gap: 0.35rem;"><span style="display: inline-block; width: 10px; height: 10px; border-radius: 2px; background: rgba(168, 85, 247, 0.2); border: 1px solid rgba(168, 85, 247, 0.4);"></span> Length Byte</div>
+              <div style="display: flex; align-items: center; gap: 0.35rem;"><span style="display: inline-block; width: 10px; height: 10px; border-radius: 2px; background: rgba(20, 184, 166, 0.2); border: 1px solid rgba(20, 184, 166, 0.4);"></span> Schema Byte</div>
+              <div style="display: flex; align-items: center; gap: 0.35rem;"><span style="display: inline-block; width: 10px; height: 10px; border-radius: 2px; background: rgba(239, 68, 68, 0.2); border: 1px solid rgba(239, 68, 68, 0.4);"></span> ERC-8021 Marker</div>
+            </div>
+          </div>
+
+          <!-- Developer Snippets & Mock Terminal -->
+          <div style="display: flex; flex-direction: column; gap: 2rem;">
+            <div class="glass-panel" style="min-height: 290px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem;">
+                <h3 style="display: flex; align-items: center; gap: 0.5rem; font-family: var(--font-display); font-size: 1.3rem;"><span>💻</span> SDK Snippet</h3>
+                <button id="copy-snippet-btn" class="filter-btn" style="padding: 0.35rem 0.85rem; font-size: 0.8rem; border-radius: 6px;">Copy</button>
+              </div>
+              
+              <div class="trade-tabs" style="margin-bottom: 1rem;">
+                <button class="trade-tab snippet-tab active" data-lang="js">Viem (JS)</button>
+                <button class="trade-tab snippet-tab" data-lang="py">Web3.py (Python)</button>
+                <button class="trade-tab snippet-tab" data-lang="curl">cURL (RPC)</button>
+              </div>
+
+              <pre style="background: var(--bg-input); border: 1px solid var(--border-color); border-radius: 10px; padding: 1.25rem; overflow-x: auto; font-family: monospace; font-size: 0.82rem; color: #a5b4fc; max-height: 200px; box-shadow: inset 0 2px 8px rgba(0,0,0,0.5);"><code id="snippet-code-box"></code></pre>
+            </div>
+
+            <div class="glass-panel" style="min-height: 240px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem;">
+                <h3 style="display: flex; align-items: center; gap: 0.5rem; font-family: var(--font-display); font-size: 1.3rem;"><span>📡</span> RPC Simulation</h3>
+                <button id="rpc-trigger-btn" class="execute-trade-btn yes" style="margin-top: 0; padding: 0.5rem 1rem; font-size: 0.85rem; width: auto; border-radius: 8px;">Broadcast Tx</button>
+              </div>
+              <div id="rpc-console-output" class="mock-terminal">
+                <div class="console-line output" style="color: var(--text-muted);">&gt; Ready for RPC simulation. Click "Broadcast Tx" to send transaction with suffix attribution.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
       
     </main>
+    <div style="height: 100px;"></div>
   </div>
 
   <!-- Wallet Provider Modal -->
