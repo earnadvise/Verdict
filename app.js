@@ -313,8 +313,15 @@ const STATE = {
 
 const LIQUIDITY_FACTOR = 15000;
 
+let MOCK_MARKETS = [];
+
 // Dynamic on-chain market loader
 async function loadMarketsFromChain() {
+  if (MOCK_MARKETS.length === 0) {
+    // Only capture the initial mock markets if we haven't already
+    MOCK_MARKETS = [...STATE.markets].filter(m => !m.address);
+  }
+
   try {
     const provider = window.ethereum ? new ethers.BrowserProvider(window.ethereum) : new ethers.JsonRpcProvider("https://mainnet.base.org");
     const factory = new ethers.Contract(FACTORY_ADDRESS, FACTORY_ABI, provider);
@@ -324,6 +331,7 @@ async function loadMarketsFromChain() {
     
     if (marketAddresses.length === 0) {
       console.log("No on-chain markets found, keeping default mock markets.");
+      STATE.markets = [...MOCK_MARKETS];
       return;
     }
     
@@ -347,11 +355,20 @@ async function loadMarketsFromChain() {
       const commentsKey = `comments_${addr.toLowerCase()}`;
       const comments = JSON.parse(localStorage.getItem(commentsKey) || "[]");
       
+      // Parse category dynamically from the description if it contains "Category: [CategoryName]"
+      let category = "Markets";
+      if (description.includes("Category: ")) {
+        const parts = description.split("Category: ");
+        if (parts.length > 1) {
+          category = parts[1].replace(".", "").trim();
+        }
+      }
+      
       loadedMarkets.push({
-        id: i + 1,
+        id: 1000 + i + 1,
         address: addr,
         title,
-        category: "Markets",
+        category: category,
         description,
         resolution: resolutionSource,
         yesPrice,
@@ -366,9 +383,14 @@ async function loadMarketsFromChain() {
       });
     }
     
-    STATE.markets = loadedMarkets;
+    // Merge on-chain markets with mock markets
+    STATE.markets = [...loadedMarkets, ...MOCK_MARKETS];
   } catch (error) {
     console.error("Error loading on-chain markets:", error);
+    // Keep mock markets if loading fails
+    if (STATE.markets.length === 0) {
+      STATE.markets = [...MOCK_MARKETS];
+    }
   }
 }
 
