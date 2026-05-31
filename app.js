@@ -912,6 +912,7 @@ function updateWalletDisplay() {
     document.getElementById('wallet-address-display').textContent = shortAddr;
     document.getElementById('wallet-balance-display').textContent = `$${STATE.usdcBalance.toLocaleString('en-US', {minimumFractionDigits: 2})}`;
     document.getElementById('dropdown-address').textContent = STATE.walletAddress;
+    gmBtn.classList.remove('gm-locked');
     gmBtn.style.display = 'block';
     const lastGm = localStorage.getItem('lastGmDate');
     const today = new Date().toDateString();
@@ -925,7 +926,11 @@ function updateWalletDisplay() {
   } else {
     walletBtn.style.display = 'block';
     walletPill.style.display = 'none';
-    gmBtn.style.display = 'none';
+    // Keep GM button visible but locked
+    gmBtn.classList.add('gm-locked');
+    gmBtn.style.display = 'block';
+    gmBtn.disabled = false;
+    gmBtn.textContent = '☀️ GM';
     document.getElementById('wallet-dropdown').style.display = 'none';
   }
 }
@@ -948,6 +953,13 @@ function disconnectWallet() {
 }
 
 async function gmCheckIn() {
+  // If not connected, prompt login instead
+  if (!STATE.walletConnected) {
+    showToast('Connect your wallet to say GM on Base! ☀️', 'info');
+    openWalletModal();
+    return;
+  }
+
   const gmBtn = document.getElementById('gm-btn');
   const today = new Date().toDateString();
   const lastGm = localStorage.getItem('lastGmDate');

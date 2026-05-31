@@ -144,6 +144,15 @@ body {
 }
 .gm-btn:hover { filter: brightness(1.05); transform: translateY(-1px) scale(1.02); }
 .gm-btn:disabled { background: var(--bg-input); color: var(--text-muted); border: 1px solid var(--border-color); animation: none; cursor: not-allowed; box-shadow: none; }
+.gm-btn.gm-locked {
+  background: var(--bg-input);
+  color: var(--text-muted);
+  border: 1px solid var(--border-color);
+  animation: none;
+  box-shadow: none;
+  opacity: 0.6;
+  cursor: not-allowed;
+}
 
 @keyframes gmPulse {
   0%, 100% { box-shadow: 0 0 0 0 rgba(245,158,11,0.5); }
