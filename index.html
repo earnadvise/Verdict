@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Verdict – a decentralized prediction market on Base. Trade YES/NO on real-world events with USDC.">
+  <title>Verdict | Prediction Markets</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- Polymarket-style Navigation -->
+  <header class="top-nav-bar">
+    <div class="logo-section">
+      <div class="logo-icon">V</div>
+      <div class="logo-text">Verdict</div>
+    </div>
+    
+    <div class="search-bar-container">
+      <div class="search-bar">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="width: 16px; height: 16px;">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+        </svg>
+        <input type="text" id="market-search" placeholder="Search markets...">
+      </div>
+    </div>
+
+    <nav class="nav-links">
+      <a class="nav-item active" data-view="dashboard">Markets</a>
+      <a class="nav-item" data-view="portfolio">Portfolio</a>
+      <a class="nav-item" data-view="ai-creator">Create</a>
+    </nav>
+
+    <div class="header-actions">
+      <button id="gm-btn" class="gm-btn" style="display:none;" onclick="gmCheckIn()">☀️ GM</button>
+      <div id="wallet-connected-pill" class="wallet-pill" style="display: none;" onclick="toggleWalletDropdown()">
+        <span class="wallet-balance" id="wallet-balance-display">$1,000.00</span>
+        <span class="wallet-address" id="wallet-address-display">0x...</span>
+        <span style="color: var(--text-muted); font-size: 0.8rem;">▾</span>
+      </div>
+      <div id="wallet-dropdown" style="display:none; position:absolute; top:60px; right:2rem; background:var(--bg-card); border:1px solid var(--border-color); border-radius:12px; padding:0.5rem; z-index:200; min-width:200px;">
+        <div style="padding:0.75rem 1rem; font-size:0.8rem; color:var(--text-muted); border-bottom:1px solid var(--border-color); margin-bottom:0.25rem;">
+          <div style="font-weight:700; color:#fff;" id="dropdown-address">0x...</div>
+          <div style="margin-top:0.2rem;">Base Mainnet ✅</div>
+        </div>
+        <button onclick="disconnectWallet()" style="width:100%; background:transparent; border:none; color:var(--color-danger); padding:0.65rem 1rem; text-align:left; cursor:pointer; font-weight:600; border-radius:8px; font-family:var(--font-sans); font-size:0.9rem;">Disconnect Wallet</button>
+      </div>
+      <button id="connect-wallet-btn" class="wallet-btn">Log In / Sign Up</button>
+    </div>
+  </header>
+
+  <div class="category-subheader">
+    <div class="category-scroll-container">
+      <button class="filter-btn active" data-category="all">All</button>
+      <button class="filter-btn" data-category="AI">AI</button>
+      <button class="filter-btn" data-category="Crypto">Crypto</button>
+      <button class="filter-btn" data-category="Politics">Politics</button>
+      <button class="filter-btn" data-category="Sports">Sports</button>
+      <button class="filter-btn" data-category="Global">Global</button>
+    </div>
+  </div>
+
+  <div class="main-wrapper top-nav-layout">
+    <main class="content-area">
+      
+      <!-- Markets Dashboard -->
+      <div id="view-dashboard" class="view-panel active">
+        <div class="markets-grid" id="markets-container">
+          <!-- Markets injected via JS -->
+        </div>
+      </div>
+
+      <!-- Portfolio View -->
+      <div id="view-portfolio" class="view-panel">
+        <h1 class="section-title">Portfolio</h1>
+        <div class="portfolio-stats">
+          <div class="stat-box">
+            <div class="stat-label">Portfolio Value</div>
+            <div class="stat-value" id="dash-net-worth">$1,000.00</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-label">Total P&L</div>
+            <div class="stat-value" id="dash-total-pl">$0.00</div>
+          </div>
+        </div>
+
+        <div class="glass-panel" style="margin-top: 2rem;">
+          <h3>Your Positions</h3>
+          <table id="portfolio-table">
+            <thead>
+              <tr>
+                <th>Market</th>
+                <th>Outcome</th>
+                <th>Shares</th>
+                <th>Avg Price</th>
+                <th>Value</th>
+                <th>P&L</th>
+              </tr>
+            </thead>
+            <tbody id="portfolio-container">
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Create Market View -->
+      <div id="view-ai-creator" class="view-panel">
+        <div style="max-width: 600px; margin: 0 auto; padding: 2rem 0;">
+          <h1 class="section-title">Create Market</h1>
+          <div class="glass-panel">
+            <div class="config-group">
+              <label>Market Title</label>
+              <input type="text" id="manual-title" placeholder="e.g. Will Claude 4 launch by September 2026?">
+            </div>
+            <div class="quick-inputs" style="grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 1rem;">
+              <div class="config-group">
+                <label>Category</label>
+                <select id="manual-category" class="sort-select" style="width: 100%;">
+                  <option value="AI">AI</option>
+                  <option value="Crypto">Crypto</option>
+                  <option value="Politics">Politics</option>
+                </select>
+              </div>
+              <div class="config-group">
+                <label>Date</label>
+                <input type="date" id="manual-expiration" value="2026-12-31">
+              </div>
+            </div>
+            <button id="manual-submit-btn" class="execute-trade-btn yes" style="width: 100%; margin-top: 2rem;">Submit Market</button>
+          </div>
+        </div>
+      </div>
+      
+    </main>
+  </div>
+
+  <!-- Wallet Provider Modal -->
+  <div id="wallet-modal" class="modal-overlay">
+    <div class="modal-content" style="max-width: 400px; border-radius: 16px;">
+      <button id="close-wallet-modal" class="close-modal-btn">&times;</button>
+      <h3 style="text-align: center; margin-bottom: 2rem;">Log In or Sign Up</h3>
+      <div style="display: flex; flex-direction: column; gap: 1rem;">
+        <button id="wallet-select-rabby" class="faucet-btn">Rabby Wallet</button>
+        <button id="wallet-select-metamask" class="faucet-btn">MetaMask</button>
+        <button id="wallet-select-coinbase" class="faucet-btn">Coinbase Wallet</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Trading Right-Side Drawer (Polymarket Clone) -->
+  <div id="trade-drawer-overlay" class="drawer-overlay"></div>
+  <div id="trade-drawer" class="trade-drawer">
+    <div class="drawer-header">
+      <div style="display: flex; gap: 0.5rem; align-items: center;">
+        <span id="modal-category" class="category-tag">AI</span>
+      </div>
+      <button id="close-drawer" class="close-drawer-btn">
+        <svg style="width: 24px; height: 24px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+      </button>
+    </div>
+    
+    <div class="drawer-content">
+      <h2 id="modal-title" class="detail-title">Will OpenAI release GPT-5 before December 2026?</h2>
+      
+      <div class="chart-container">
+        <svg id="svg-chart" width="100%" height="100%" viewBox="0 0 500 200" preserveAspectRatio="none"></svg>
+      </div>
+
+      <div class="trade-widget">
+        <div class="trade-tabs">
+          <button class="trade-tab active">Buy</button>
+          <button class="trade-tab">Sell</button>
+        </div>
+
+        <div class="trade-toggle" style="margin-top: 1rem;">
+          <button id="toggle-yes" class="trade-toggle-btn yes active">Yes <span id="toggle-yes-price">65¢</span></button>
+          <button id="toggle-no" class="trade-toggle-btn no">No <span id="toggle-no-price">35¢</span></button>
+        </div>
+
+        <div class="input-label-row" style="margin-top: 1.5rem;">
+          <span style="color: var(--text-muted); font-size: 0.85rem;">Amount</span>
+          <span id="faucet-helper" style="color: var(--color-primary); cursor: pointer; font-size: 0.85rem; font-weight: 600;">Max</span>
+        </div>
+        
+        <div class="input-box-usdc">
+          <span style="color: var(--text-muted); font-weight: 600;">$</span>
+          <input type="number" id="trade-usdc-input" value="100" min="1" step="10">
+        </div>
+
+        <div class="summary-stats">
+          <div class="summary-row">
+            <span>Avg price</span>
+            <span id="sum-avg-price">0.00¢</span>
+          </div>
+          <div class="summary-row">
+            <span>Shares</span>
+            <span id="sum-shares">0.00</span>
+          </div>
+          <div class="summary-row" style="margin-top: 0.5rem; padding-top: 0.5rem; border-top: 1px solid var(--border-color);">
+            <span style="font-weight: 600;">Potential return</span>
+            <span id="sum-max-payout" style="font-weight: 600; color: var(--color-success);">$0.00</span>
+          </div>
+        </div>
+
+        <button id="execute-trade-btn" class="execute-trade-btn yes">Log In to Trade</button>
+      </div>
+      
+      <!-- Oracle Resolution Widget -->
+      <div id="oracle-resolution-widget" class="glass-panel" style="display: none; margin-top: 1.5rem; border: 1px solid var(--border-color); padding: 1.25rem;">
+        <h4 style="margin-bottom: 0.5rem; color: var(--color-warning);">Oracle Resolution Panel</h4>
+        <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1rem;">As the designated oracle, you can resolve this prediction market. This action is final and will settle all trades.</p>
+        <div style="display: flex; gap: 0.75rem;">
+          <button id="resolve-yes-btn" class="execute-trade-btn yes" style="padding: 0.5rem; font-size: 0.9rem;">Resolve YES</button>
+          <button id="resolve-no-btn" class="execute-trade-btn no" style="padding: 0.5rem; font-size: 0.9rem;">Resolve NO</button>
+        </div>
+      </div>
+      
+      <div class="drawer-about" style="margin-top: 2rem;">
+        <h4 style="margin-bottom: 0.5rem;">About</h4>
+        <p id="modal-description" style="color: var(--text-muted); font-size: 0.85rem; line-height: 1.5;"></p>
+        <p id="modal-resolution" style="color: var(--text-muted); font-size: 0.85rem; line-height: 1.5; margin-top: 0.5rem;"></p>
+      </div>
+
+      <div class="comments-section" style="margin-top: 2rem; border-top: 1px solid var(--border-color); padding-top: 1.5rem;">
+        <h4 style="margin-bottom: 1rem;">Discussion</h4>
+        <div id="comments-container" style="display: flex; flex-direction: column; gap: 0.75rem; margin-bottom: 1rem;"></div>
+        <div style="display: flex; gap: 0.5rem;">
+          <input type="text" id="comment-input" placeholder="Add a comment..." style="flex: 1; background: var(--bg-input); border: 1px solid var(--border-color); border-radius: 8px; color: #fff; padding: 0.75rem; outline: none;">
+          <button id="comment-submit-btn" style="background: var(--bg-hover); color: #fff; border: 1px solid var(--border-color); border-radius: 8px; padding: 0 1rem; cursor: pointer; font-weight: 600;">Post</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast-container" id="toast-wrapper"></div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/6.7.0/ethers.umd.min.js"></script>
+  <script src="api-sandbox.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
