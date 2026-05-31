@@ -147,6 +147,164 @@ const STATE = {
       comments: [
         { author: "AGIWatcher", text: "With o3 already at 87.5%, this is very achievable.", time: "11:30 AM" }
       ]
+    },
+    {
+      id: 11,
+      title: "Will Solana's SOL token reach $500 before 2027?",
+      category: "Crypto",
+      description: "Resolves to YES if the price of Solana (SOL) reaches or exceeds $500 USD on any major exchange (Coinbase, Binance, or Kraken) before January 1, 2027.",
+      resolution: "Coinbase SOL/USD price feed.",
+      yesPrice: 0.38,
+      history: [0.20, 0.25, 0.30, 0.33, 0.36, 0.38],
+      comments: []
+    },
+    {
+      id: 12,
+      title: "Will Google release Gemini Ultra 2.0 publicly in 2026?",
+      category: "AI",
+      description: "Resolves to YES if Google officially releases a model branded as Gemini Ultra 2.0 (or equivalent next-gen flagship) to the general public before December 31, 2026.",
+      resolution: "Official Google DeepMind announcements.",
+      yesPrice: 0.72,
+      history: [0.45, 0.50, 0.58, 0.63, 0.68, 0.72],
+      comments: [
+        { author: "DeepMindWatcher", text: "Gemini 2.0 Flash is already out, Ultra is next.", time: "2:00 PM" }
+      ]
+    },
+    {
+      id: 13,
+      title: "Will India win the 2026 ICC T20 World Cup?",
+      category: "Sports",
+      description: "Resolves to YES if the Indian cricket team wins the 2026 ICC Men's T20 World Cup tournament.",
+      resolution: "Official ICC match results.",
+      yesPrice: 0.30,
+      history: [0.25, 0.27, 0.29, 0.30],
+      comments: []
+    },
+    {
+      id: 14,
+      title: "Will the US Federal Reserve cut interest rates 3+ times in 2026?",
+      category: "Politics",
+      description: "Resolves to YES if the Federal Reserve makes 3 or more interest rate cuts (each of at least 25bps) during calendar year 2026.",
+      resolution: "Federal Reserve official FOMC announcements.",
+      yesPrice: 0.44,
+      history: [0.55, 0.50, 0.48, 0.45, 0.44],
+      comments: []
+    },
+    {
+      id: 15,
+      title: "Will XRP win its SEC lawsuit completely by end of 2026?",
+      category: "Crypto",
+      description: "Resolves to YES if a US court issues a final ruling fully in Ripple's favor in the SEC vs Ripple case, with no further appeals pending, before December 31, 2026.",
+      resolution: "US federal court public records and SEC official statements.",
+      yesPrice: 0.60,
+      history: [0.30, 0.40, 0.50, 0.55, 0.58, 0.60],
+      comments: [
+        { author: "XRPArmy", text: "The appeal is almost over. Ripple wins!", time: "3:45 PM" }
+      ]
+    },
+    {
+      id: 16,
+      title: "Will a humanoid robot be deployed in a mainstream factory by 2027?",
+      category: "AI",
+      description: "Resolves to YES if any company (Tesla Optimus, Figure AI, Agility, etc.) publicly deploys 100+ humanoid robots in a single non-demo production factory setting before January 1, 2027.",
+      resolution: "Official company press releases and verified news reporting.",
+      yesPrice: 0.62,
+      history: [0.20, 0.30, 0.40, 0.50, 0.58, 0.62],
+      comments: []
+    },
+    {
+      id: 17,
+      title: "Will Donald Trump be impeached during his second term?",
+      category: "Politics",
+      description: "Resolves to YES if the US House of Representatives passes articles of impeachment against President Donald Trump during his second term (2025–2029).",
+      resolution: "Official US House of Representatives records.",
+      yesPrice: 0.12,
+      history: [0.08, 0.10, 0.11, 0.12],
+      comments: []
+    },
+    {
+      id: 18,
+      title: "Will Manchester City win the 2025/26 UEFA Champions League?",
+      category: "Sports",
+      description: "Resolves to YES if Manchester City FC wins the UEFA Champions League title in the 2025/26 season.",
+      resolution: "Official UEFA Champions League results.",
+      yesPrice: 0.16,
+      history: [0.12, 0.14, 0.15, 0.16],
+      comments: []
+    },
+    {
+      id: 19,
+      title: "Will Ethereum ETF see $10B+ inflows in 2026?",
+      category: "Crypto",
+      description: "Resolves to YES if the cumulative net inflows into all US-listed Ethereum spot ETFs exceed $10 billion USD in calendar year 2026.",
+      resolution: "Bloomberg ETF flow data and official SEC filings.",
+      yesPrice: 0.50,
+      history: [0.25, 0.32, 0.38, 0.44, 0.48, 0.50],
+      comments: []
+    },
+    {
+      id: 20,
+      title: "Will OpenAI remain private (not IPO) through 2026?",
+      category: "AI",
+      description: "Resolves to YES if OpenAI does NOT complete an Initial Public Offering (IPO) or direct listing on a public stock exchange by December 31, 2026.",
+      resolution: "SEC filings and official OpenAI announcements.",
+      yesPrice: 0.67,
+      history: [0.80, 0.75, 0.72, 0.68, 0.67],
+      comments: [
+        { author: "VCTracker", text: "With the restructuring, an IPO seems closer than ever.", time: "4:30 PM" }
+      ]
+    },
+    {
+      id: 21,
+      title: "Will North Korea conduct a nuclear test in 2026?",
+      category: "Global",
+      description: "Resolves to YES if North Korea conducts a confirmed nuclear weapons test detected by international monitoring organizations (CTBTO) in calendar year 2026.",
+      resolution: "CTBTO Preparatory Commission official announcements.",
+      yesPrice: 0.20,
+      history: [0.15, 0.17, 0.18, 0.20],
+      comments: []
+    },
+    {
+      id: 22,
+      title: "Will Lionel Messi retire from professional football by 2027?",
+      category: "Sports",
+      description: "Resolves to YES if Lionel Messi officially announces his retirement from professional club football before January 1, 2027.",
+      resolution: "Official announcements from Messi or his club Inter Miami.",
+      yesPrice: 0.35,
+      history: [0.20, 0.25, 0.28, 0.32, 0.35],
+      comments: [
+        { author: "FootballFan", text: "He's still performing at a high level at Inter Miami.", time: "1:15 PM" }
+      ]
+    },
+    {
+      id: 23,
+      title: "Will a country officially adopt Bitcoin as legal tender in 2026?",
+      category: "Crypto",
+      description: "Resolves to YES if any sovereign nation officially passes legislation or executive order making Bitcoin legal tender within its borders during 2026 (beyond El Salvador).",
+      resolution: "Official government announcements and verified legal documents.",
+      yesPrice: 0.25,
+      history: [0.15, 0.18, 0.20, 0.23, 0.25],
+      comments: []
+    },
+    {
+      id: 24,
+      title: "Will there be a major AI-caused cybersecurity incident in 2026?",
+      category: "AI",
+      description: "Resolves to YES if a cyberattack publicly attributed to AI-generated malware or AI-assisted hacking causes verifiable damages exceeding $500M to a government or Fortune 500 company in 2026.",
+      resolution: "Official government cybersecurity reports and verified news sources.",
+      yesPrice: 0.45,
+      history: [0.25, 0.30, 0.35, 0.40, 0.43, 0.45],
+      comments: []
+    },
+    {
+      id: 25,
+      title: "Will global CO2 emissions peak and decline in 2026?",
+      category: "Global",
+      description: "Resolves to YES if the International Energy Agency (IEA) or IPCC confirms that global CO2 emissions in 2026 were lower than in 2025, marking a confirmed peak.",
+      resolution: "IEA Global Energy Review annual report.",
+      yesPrice: 0.28,
+      history: [0.20, 0.22, 0.24, 0.26, 0.28],
+      comments: []
     }
   ],
   positions: []
